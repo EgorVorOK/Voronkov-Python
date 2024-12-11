@@ -4,6 +4,6 @@
 price = int(input("Введите цену за 1 кг конфет: "))
 weight = 1.0
 while weight <= 2:
-    print(price * weight)
+    print("Цена за " , weight , "равна ",  price * weight)
     weight += 0.2
     print(weight)
