@@ -22,5 +22,5 @@ try:
     suit = num // 100
     dignity = num % 100
     print(dignities[dignity], suits[suit])
-except Exception as e:
+except ValueError:
     print("ОШИБКА: такой карты нет!")
