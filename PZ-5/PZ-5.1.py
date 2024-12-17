@@ -5,10 +5,6 @@
 def horizontal(length, char='$'):
     print(char * length)
 
-def vertical(height, char='$'):
-    for i in range(height):
-        print(char)
-
 def frame(word, char='$'):
     word_length = len(word)
     horizontal(word_length + 4, char)
@@ -18,5 +14,5 @@ def frame(word, char='$'):
 try:
     word = input("Введите слово, которое хотите заключить в рамку: ")
     frame(word)
-except:
+except ValueError:
     print("ОШИБКА!")
