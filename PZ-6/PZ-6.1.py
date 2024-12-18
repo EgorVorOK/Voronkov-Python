@@ -4,8 +4,14 @@
 
 fibonacci = [1, 1]
 
-for i in range(2, 10):
-    next = fibonacci[i - 1] + fibonacci[i - 2]
-    fibonacci.append(next)
+try:
+    n = int(input("Введите число N(>2): "))
+    if n <= 2:
+        raise ValueError
+    for i in range(2, n):
+        next = fibonacci[i - 1] + fibonacci[i - 2]
+        fibonacci.append(next)
 
-print(fibonacci)
+    print(fibonacci)
+except ValueError:
+    print("ОШИБКА!")
