@@ -4,34 +4,34 @@
 # K = 2 «А» перейдет в «В», «а» — в «в», «Б» — в «Г», «я» — в «б» и т. д.). Букву «ё»
 # в алфавите не учитывать, знаки препинания и пробелы не изменять.
 
-def encr_text(rus_text, k):
-    low_alph = [chr(i) for i in range(ord('а'), ord('я') + 1)]
-    upp_alph = [chr(i) for i in range(ord('А'), ord('Я') + 1)]
+def encrypt_sentence(sentence, K):
+    russian_lower = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
+    russian_upper = russian_lower.upper()
+    encrypted = []
 
-    text = ""
-
-    for char in rus_text:
-        if char in low_alph:
-            nindex = (low_alph.index(char) + k) % len(low_alph)
-            text += low_alph[nindex]
-        elif char in upp_alph:
-            nindex = (upp_alph.index(char) + k) % len(upp_alph)
-            text += upp_alph[nindex]
+    for char in sentence:
+        if char in russian_lower:
+            original_pos = russian_lower.index(char)
+            new_pos = (original_pos + K) % 32
+            encrypted.append(russian_lower[new_pos])
+        elif char in russian_upper:
+            original_pos = russian_upper.index(char)
+            new_pos = (original_pos + K) % 32
+            encrypted.append(russian_upper[new_pos])
         else:
-            text += char
+            encrypted.append(char)
 
-    return text
-
+    return ''.join(encrypted)
 
 try:
-    rus_tex = input("Введите строку-предложение на русском языке: ")
-    k = int(input("Введите число, выполняющее условие 0 < K < 10: "))
+    sentence = input("Введите предложение на русском: ")
+    K = int(input("Введите число K (0 < K < 10): "))
 
-    if k <= 0 or k >= 10:
-        raise ValueError("K должно быть в диапазоне от 1 до 9.")
-
-    encr_res = encr_text(rus_tex, k)
-    print("Зашифрованный текст:", encr_res)
+    if 0 < K < 10:
+        encrypted_sentence = encrypt_sentence(sentence, K)
+        print("Зашифрованное предложение:", encrypted_sentence)
+    else:
+        print("Число K должно быть в диапазоне 0 < K < 10")
 
 except ValueError as e:
     print("ОШИБКА!!!", e)

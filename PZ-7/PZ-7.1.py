@@ -10,5 +10,3 @@ try:
     print((new_sp[:n]))
 except ValueError:
     print("ОШИБКА!")
-
-
