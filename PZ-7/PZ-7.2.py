@@ -7,7 +7,7 @@
 def encrypt_sentence(sentence, K):
     russian_lower = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
     russian_upper = russian_lower.upper()
-    encrypted = []
+    encrypted = ""
 
     for char in sentence:
         if char in russian_lower:
@@ -17,9 +17,9 @@ def encrypt_sentence(sentence, K):
         elif char in russian_upper:
             original_pos = russian_upper.index(char)
             new_pos = (original_pos + K) % 32
-            encrypted.append(russian_upper[new_pos])
+            encrypted += russian_upper[new_pos]
         else:
-            encrypted.append(char)
+            encrypted += char
 
     return ''.join(encrypted)
 
