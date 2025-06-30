@@ -1,22 +1,18 @@
+import random
 """
 Сгенерировать двумерный список, в которой нечетные элементы заменяются на 0.
 """
 
-m = 3
-n = 3
-
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
+rows = 3
+columns = 3
+matrix = [[random.randint(1, 10) for c in range(columns)] for r in range(rows)]
 
 print("Исходная матрица:")
 for row in matrix:
     print(row)
 
-for i in range(m):
-    for j in range(n):
+for i in range(rows):
+    for j in range(columns):
         if matrix[i][j] % 2 != 0:
             matrix[i][j] = 0
 

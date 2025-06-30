@@ -1,40 +1,34 @@
+import re
 """Из исходного текстового файла (ip_address.txt) из раздела «Частоупотребимые
 маски» перенести в первый файл строки с нулевым четвертым октетом, а во второй
 – все остальные. Посчитать количество полученных строк в каждом файле."""
 
+def process_ip_masks(input_file, output_zero, output_non_zero):
+    with open(input_file, 'r', encoding='utf-8') as file:
+        content = file.read()
 
+    ip_pattern = re.compile(r'\b(?:\d{1,3}\.){3}\d{1,3}\b')
 
-with open('ip_address.txt', 'r', encoding='utf-8') as file:
-    lines = file.readlines()
+    all_ips = ip_pattern.findall(content)
 
-zero_octet = []
-other_octet = []
+    zero_octet = [ip for ip in all_ips if ip.endswith('.0')]
+    non_zero_octet = [ip for ip in all_ips if not ip.endswith('.0')]
 
-in_target_section = False
+    with open(output_zero, 'w', encoding='utf-8') as file:
+        file.write('\n'.join(zero_octet))
 
-for line in lines:
-    line = line.strip()
+    with open(output_non_zero, 'w', encoding='utf-8') as file:
+        file.write('\n'.join(non_zero_octet))
 
-    if "Частоупотребимые маски" in line:
-        in_target_section = True
-        continue
+    return len(zero_octet), len(non_zero_octet)
 
-    if in_target_section:
-        if line.startswith("Количество адресов подсети"):
-            break
+if __name__ == '__main__':
+    input_file = 'ip_address.txt'
+    output_zero = 'zero_octet.txt'
+    output_non_zero = 'non_zero_octet.txt'
 
-        if line.count('.') == 3 and len(line.split('.')) == 4:
-            octets = line.split('.')
-            if octets[-1] == '0':
-                zero_octet.append(line)
-            else:
-                other_octet.append(line)
+    zero_count, non_zero_count = process_ip_masks(input_file, output_zero, output_non_zero)
 
-with open('zero_octet.txt', 'w', encoding='utf-8') as f:
-    f.write('\n'.join(zero_octet))
+    print(f'Количество масок с нулевым четвертым октетом: {zero_count}')
+    print(f'Количество масок с ненулевым четвертым октетом: {non_zero_count}')
 
-with open('other_octet.txt', 'w', encoding='utf-8') as f:
-    f.write('\n'.join(other_octet))
-
-print(f"Найдено масок с 0: {len(zero_octet)}")
-print(f"\nНайдено остальных масок: {len(other_octet)}")
