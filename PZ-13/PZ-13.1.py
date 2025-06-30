@@ -1,12 +1,11 @@
+import random
 """
 В двумерном списке элементы второго столбца возвести в квадрат.
 """
 
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
+rows = 3
+columns = 3
+matrix = [[random.randint(1, 10) for c in range(columns)] for r in range(rows)]
 
 print("Исходная матрица:")
 for row in matrix:
